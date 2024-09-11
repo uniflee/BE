@@ -10,15 +10,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import uniflee.backend.global.domain.Address;
 import uniflee.backend.global.domain.BaseEntity;
 import uniflee.backend.orders.domain.Orders;
 
 @Entity
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
@@ -38,7 +36,7 @@ public class User extends BaseEntity {
 
 	@Getter
 	@AllArgsConstructor
-	private enum Grade{
+	public enum Grade{
 		BRONZE(0.01),
 		SILVER(0.03),
 		GOLD(0.06),
