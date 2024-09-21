@@ -16,12 +16,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import uniflee.backend.designer.domain.Designer;
 import uniflee.backend.global.domain.BaseEntity;
 import uniflee.backend.itemDescription.domain.ItemDescription;
 import uniflee.backend.orders.domain.Orders;
 
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor

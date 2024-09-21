@@ -13,6 +13,7 @@ import uniflee.backend.designer.service.DesignerService;
 import uniflee.backend.global.exception.CustomException;
 import uniflee.backend.item.domain.Item;
 import uniflee.backend.item.dto.ItemRequestDto;
+import uniflee.backend.item.dto.OwnItemResponse;
 import uniflee.backend.item.repository.ItemRepository;
 import uniflee.backend.itemDescription.domain.ItemDescription;
 
@@ -58,5 +59,18 @@ public class ItemService {
 				itemRepository.deleteById(id);
 			}
 		);
+	}
+
+	public List<OwnItemResponse> getOwnItems() {
+		Designer designer = designerService.getDesigner();
+		return itemRepository.findByDesigner(designer).stream().map(
+			item -> OwnItemResponse.builder()
+				.id(item.getId())
+				.featuredImageUrl(item.getFeaturedImageUrl())
+				.designerName(designer.getName())
+				.name(item.getName())
+				.price(item.getPrice())
+				.build()
+		).toList();
 	}
 }
