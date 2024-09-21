@@ -1,5 +1,6 @@
 package uniflee.backend.item.domain;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -39,6 +40,10 @@ public class Item extends BaseEntity {
 	@JoinColumn(name = "designer_id")
 	private Designer designer;
 
-	@OneToMany(mappedBy = "item")
+	@OneToMany(mappedBy = "item", cascade = PERSIST)
 	private List<ItemDescription> itemDetails = new ArrayList<>();
+
+	public void connectItemDetails(List<ItemDescription> itemDetail) {
+		this.itemDetails = itemDetail;
+	}
 }

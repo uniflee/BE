@@ -12,10 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import uniflee.backend.global.domain.BaseEntity;
 import uniflee.backend.item.domain.Item;
 
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor

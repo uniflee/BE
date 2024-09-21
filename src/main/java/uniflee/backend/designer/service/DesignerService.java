@@ -47,7 +47,7 @@ public class DesignerService {
 		}
 	}
 
-	private Designer getDesigner() {
+	public Designer getDesigner() {
 		String designerName = SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("designerName: {}", designerName);
 		return designerRepository.findByUsername(designerName).orElseThrow(
