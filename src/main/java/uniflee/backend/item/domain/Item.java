@@ -40,10 +40,14 @@ public class Item extends BaseEntity {
 	@JoinColumn(name = "designer_id")
 	private Designer designer;
 
-	@OneToMany(mappedBy = "item", cascade = PERSIST)
+	@OneToMany(mappedBy = "item", cascade = PERSIST, orphanRemoval = true)
 	private List<ItemDescription> itemDetails = new ArrayList<>();
 
 	public void connectItemDetails(List<ItemDescription> itemDetail) {
 		this.itemDetails = itemDetail;
+	}
+
+	public boolean isItemOwner(Designer designer) {
+		return this.designer.equals(designer);
 	}
 }

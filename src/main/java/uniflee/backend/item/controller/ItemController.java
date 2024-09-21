@@ -1,6 +1,9 @@
 package uniflee.backend.item.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,12 @@ public class ItemController {
 	@PostMapping
 	public ResponseEntity<?> createItem(@RequestBody ItemRequestDto request){
 		itemService.createItem(request);
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping
+	public ResponseEntity<?> deleteItem(@RequestBody List<Long> productIds){
+		itemService.deleteItem(productIds);
 		return ResponseEntity.ok().build();
 	}
 }

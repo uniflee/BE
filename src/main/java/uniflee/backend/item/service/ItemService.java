@@ -1,5 +1,7 @@
 package uniflee.backend.item.service;
 
+import static uniflee.backend.global.exception.ErrorCode.*;
+
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import uniflee.backend.designer.domain.Designer;
 import uniflee.backend.designer.service.DesignerService;
+import uniflee.backend.global.exception.CustomException;
 import uniflee.backend.item.domain.Item;
 import uniflee.backend.item.dto.ItemRequestDto;
 import uniflee.backend.item.repository.ItemRepository;
@@ -39,5 +42,21 @@ public class ItemService {
 		).toList();
 		item.connectItemDetails(descriptionList);
 		itemRepository.save(item);
+	}
+
+	@Transactional
+	public void deleteItem(List<Long> productIds) {
+		Designer designer = designerService.getDesigner();
+		productIds.forEach(
+			id -> {
+				Item targetItem = itemRepository.findById(id).orElseThrow(
+					() -> new CustomException(ITEM_NOT_FOUND_ERROR)
+				);
+				if(!targetItem.isItemOwner(designer)) {
+					throw new CustomException(PRODUCT_ACCESS_DENIED_ERROR);
+				}
+				itemRepository.deleteById(id);
+			}
+		);
 	}
 }
