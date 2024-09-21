@@ -31,4 +31,14 @@ public class Designer extends BaseEntity {
 
 	@OneToMany(mappedBy = "designer")
 	private List<Item> items = new ArrayList<>();
+
+	public void updateName(String name) {
+		this.name = name;
+	}
+	public void updateProfileImageUrl(String profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
+	}
+	public void updateBackgroundImageUrl(String backgroundImageUrl) {
+		this.backgroundImageUrl = backgroundImageUrl;
+	}
 }
