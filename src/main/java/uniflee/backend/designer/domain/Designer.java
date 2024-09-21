@@ -3,6 +3,7 @@ package uniflee.backend.designer.domain;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -23,9 +24,11 @@ public class Designer extends BaseEntity {
 	@Id @GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	private String name;
+	private String profileImageUrl;
+	private String backgroundImageUrl;
 	private String username;
 	private String password;
 
 	@OneToMany(mappedBy = "designer")
-	private List<Item> items;
+	private List<Item> items = new ArrayList<>();
 }
