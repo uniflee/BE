@@ -9,7 +9,7 @@ public enum ErrorCode {
 
 	// //global
 	// INTERNAL_SERVER_ERROR(500, "GLOBAL-001", "서버에 오류가 발생하였습니다."),
-	// INPUT_INVALID_VALUE_ERROR(400, "GLOBAL-002", "잘못된 입력 값입니다."),
+	INPUT_INVALID_VALUE_ERROR(400, "GLOBAL-002", "잘못된 입력 값입니다."),
 	// INPUT_INVALID_TYPE_ERROR(400, "GLOBAL-003", "잘못된 입력 타입입니다."),
 	// REQUEST_PARAMETER_NOT_FOUND_ERROR(400, "GLOBAL-004", "입력 파라미터가 존재하지 않습니다."),
 	// REQUEST_PARAMETER_TYPE_NOT_MATCH_ERROR(400, "GLOBAL-005", "입력 파라미터의 타입이 올바르지 않습니다."),
@@ -37,11 +37,14 @@ public enum ErrorCode {
 	NOT_FOUND_USER_ERROR(404, "AUTH-004", "사용자를 찾을 수 없습니다."),
 	ACCESS_DENIED_ERROR(403, "AUTH-005", "접근 권한이 없습니다."),
 	ALREADY_LOGOUT_ERROR(400, "AUTH-006", "이미 로그아웃 되었습니다."),
-	PRINCIPAL_NOT_FOUND_ERROR(404, "AUTH-007", "principal을 찾을 수 없습니다."),;
+	PRINCIPAL_NOT_FOUND_ERROR(404, "AUTH-007", "principal을 찾을 수 없습니다."),
 	// USERNAME_NOT_FOUND_ERROR(404, "AUTH-002", "사용자 이름을 찾을 수 엄습니다.");
 	// AUTHENTICATION_ERROR(401, "AUTH-003", "인증에 실패했습니다. 인증 수단이 유효한지 확인하세요."),
 	// AUTHORIZATION_ERROR(403, "AUTH-004", "권한이 존재하지 않습니다."),
 	//
+	//aws
+	AWS_S3_IMAGE_NOT_FOUND_ERROR(404, "AWS-001", "이미지를 찾을 수 없습니다."),
+	AWS_S3_IMAGE_EXTEND_ERROR(400, "AWS-002", "허용되지 않는 확장자입니다."),;
 	// //message
 	// TOO_MANY_REQUEST_ERROR(429, "MESSAGE-001", "너무 많은 인증 메시지를 요청했습니다. 24시간 후 요청해주세요."),
 	//
