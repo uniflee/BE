@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uniflee.backend.designer.domain.Designer;
+import uniflee.backend.designer.dto.DesignerInfoResponse;
 import uniflee.backend.designer.repository.DesignerRepository;
 import uniflee.backend.global.exception.CustomException;
 
@@ -46,6 +47,14 @@ public class DesignerService {
 			// throw new CustomException(INVALID_INPUT_VALUE_ERROR);
 		}
 	}
+	public DesignerInfoResponse getDesignerInfo() {
+		Designer designer = getDesigner();
+		return DesignerInfoResponse.builder()
+			.name(designer.getName())
+			.profileImageUrl(designer.getProfileImageUrl())
+			.backgroundImageUrl(designer.getBackgroundImageUrl())
+			.build();
+	}
 
 	public Designer getDesigner() {
 		String designerName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -55,4 +64,5 @@ public class DesignerService {
 		);
 
 	}
+
 }
