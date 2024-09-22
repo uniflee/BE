@@ -13,6 +13,7 @@ import uniflee.backend.designer.service.DesignerService;
 import uniflee.backend.global.exception.CustomException;
 import uniflee.backend.item.domain.Item;
 import uniflee.backend.item.dto.ItemRequestDto;
+import uniflee.backend.item.dto.ItemUpdateRequest;
 import uniflee.backend.item.dto.OwnItemResponse;
 import uniflee.backend.item.repository.ItemRepository;
 import uniflee.backend.itemDescription.domain.ItemDescription;
@@ -72,5 +73,30 @@ public class ItemService {
 				.price(item.getPrice())
 				.build()
 		).toList();
+	}
+
+	@Transactional
+	public void updateItem(ItemUpdateRequest request, Long itemId) {
+		Designer designer = designerService.getDesigner();
+		Item item = itemRepository.findById(itemId).orElseThrow(
+			() -> new CustomException(ITEM_NOT_FOUND_ERROR)
+		);
+		if(!item.isItemOwner(designer)) {
+			throw new CustomException(PRODUCT_ACCESS_DENIED_ERROR);
+		}
+		item.updateItem(request);
+
+		request.getDescriptions().stream().map(
+			description ->
+				ItemDescription.builder()
+					.description(description.getDescription())
+					.imageUrl(description.getImageUrl())
+					.item(item)
+					.build()
+		).forEach(
+			description -> {
+				item.getItemDetails().add(description);
+			}
+		);
 	}
 }

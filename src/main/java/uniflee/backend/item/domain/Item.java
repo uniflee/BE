@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import uniflee.backend.designer.domain.Designer;
 import uniflee.backend.global.domain.BaseEntity;
+import uniflee.backend.item.dto.ItemUpdateRequest;
 import uniflee.backend.itemDescription.domain.ItemDescription;
 import uniflee.backend.orders.domain.Orders;
 
@@ -51,5 +52,12 @@ public class Item extends BaseEntity {
 
 	public boolean isItemOwner(Designer designer) {
 		return this.designer.equals(designer);
+	}
+
+	public void updateItem(ItemUpdateRequest request) {
+		this.name = request.getName();
+		this.price = request.getPrice();
+		this.featuredImageUrl = request.getFeaturedImageUrl();
+		this.itemDetails.clear();
 	}
 }
