@@ -4,6 +4,7 @@ import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -17,6 +18,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import uniflee.backend.designer.domain.Designer;
 import uniflee.backend.global.domain.BaseEntity;
+import uniflee.backend.itemDescription.domain.ItemDescription;
 import uniflee.backend.orders.domain.Orders;
 
 @Entity
@@ -28,13 +30,15 @@ public class Item extends BaseEntity {
 	private Long id;
 	private String name;
 	private Long price;
-	private String image;
-	private String description;
+	private String featuredImageUrl;
 
 	@OneToMany(mappedBy = "item")
-	private List<Orders> orders;
+	private List<Orders> orders = new ArrayList<>();
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "designer_id")
 	private Designer designer;
+
+	@OneToMany(mappedBy = "item")
+	private List<ItemDescription> itemDetails = new ArrayList<>();
 }

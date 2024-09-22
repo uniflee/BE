@@ -13,9 +13,10 @@ public enum ErrorCode {
 	// INPUT_INVALID_TYPE_ERROR(400, "GLOBAL-003", "잘못된 입력 타입입니다."),
 	// REQUEST_PARAMETER_NOT_FOUND_ERROR(400, "GLOBAL-004", "입력 파라미터가 존재하지 않습니다."),
 	// REQUEST_PARAMETER_TYPE_NOT_MATCH_ERROR(400, "GLOBAL-005", "입력 파라미터의 타입이 올바르지 않습니다."),
-	//chatRoom
+	//item
 	// CHAT_ROOM_JOIN_ERROR(400,"CHATROOM-001", "?"),
-	// ROOM_NOT_FOUND_ERROR(404,"CHATROOM-002", "채팅방을 찾을 수 없습니다"),
+	ITEM_NOT_FOUND_ERROR(404,"ITEM-001", "해당 상품이 존재하지 않습니다"),
+	PRODUCT_ACCESS_DENIED_ERROR(403,"ITEM-002", "해당 상품에 접근 권한이 없습니다"),
 	// CHAT_ROOM_LIMITED_USER_ERROR(400,"CHATROOM-003", "방에 인원이 다 찼습니다"),
 	//streamRoom
 	// STREAM_ROOM_JOIN_ERROR(400,"STREAMROOM-001", "?"),

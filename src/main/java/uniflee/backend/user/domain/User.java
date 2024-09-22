@@ -3,6 +3,7 @@ package uniflee.backend.user.domain;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Embedded;
@@ -32,7 +33,7 @@ public class User extends BaseEntity {
 	private Address address;
 
 	@OneToMany(mappedBy = "user")
-	private List<Orders> orders;
+	private List<Orders> orders = new ArrayList<>();
 
 	@Getter
 	@AllArgsConstructor
