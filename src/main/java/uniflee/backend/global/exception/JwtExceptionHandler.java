@@ -17,19 +17,19 @@ import static java.time.LocalDateTime.now;
 @RestControllerAdvice
 public class JwtExceptionHandler {
 
-    @ExceptionHandler({SignatureException.class, MalformedJwtException.class})
-    public ResponseEntity<ErrorResponse> JwtSignatureException() {
+    @ExceptionHandler({SignatureException.class, MalformedJwtException.class, StringIndexOutOfBoundsException.class})
+    public ResponseEntity<ErrorResponse> JwtInvalidException() {
         ErrorCode errorCode = ErrorCode.INVALID_TOKEN_ERROR;
         return ResponseEntity.status(errorCode.getStatus()).body(makeErrorResponse(errorCode));
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
-    public ResponseEntity<ErrorResponse> JwtMalformedException() {
+    public ResponseEntity<ErrorResponse> JwtExpiredException() {
         ErrorCode errorCode = ErrorCode.EXPIRED_TOKEN_ERROR;
         return ResponseEntity.status(errorCode.getStatus()).body(makeErrorResponse(errorCode));
     }
 
-    @ExceptionHandler(NullPointerException.class)
+    @ExceptionHandler({NullPointerException.class})
     public ResponseEntity<ErrorResponse> JwtNullPointerException() {
         ErrorCode errorCode = ErrorCode.NULL_TOKEN_ERROR;
         return ResponseEntity.status(errorCode.getStatus()).body(makeErrorResponse(errorCode));
