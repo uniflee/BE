@@ -1,6 +1,5 @@
 package uniflee.backend.Security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.OncePerRequestFilter;
 import uniflee.backend.user.OAuth2SuccessHandler;
 import uniflee.backend.user.Service.OAuth2UserService;
 
@@ -60,7 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/user").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() // API 개발 후 수정
 
                 .and()
                 .exceptionHandling()
