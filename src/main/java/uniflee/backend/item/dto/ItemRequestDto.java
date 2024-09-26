@@ -2,13 +2,21 @@ package uniflee.backend.item.dto;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
+@Schema(description = "상품 생성 요청 데이터 객체")
 public class ItemRequestDto {
+	@Schema(description = "상품의 대표 이미지 URL", example = "https://example.com/featured.jpg")
 	private String featuredImageUrl;
+	@Schema(description = "상품 이름", example = "상품 이름")
 	private String name;
+	@Schema(description = "상품 가격", example = "10000")
 	private Long price;
+	@Schema(description = "상품 설명 목록", example = "[{\"imageUrl\":\"https://example.com/image.jpg\",\"description\":\"상품 설명\"},{\"imageUrl\":\"https://example.com/image.jpg\",\"description\":\"상품 설명\"}]")
 	private List<ItemDescription> descriptions;
+
+
 
 }
