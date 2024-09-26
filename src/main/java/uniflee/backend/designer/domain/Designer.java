@@ -12,10 +12,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import uniflee.backend.global.domain.BaseEntity;
 import uniflee.backend.item.domain.Item;
 
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -31,4 +33,14 @@ public class Designer extends BaseEntity {
 
 	@OneToMany(mappedBy = "designer")
 	private List<Item> items = new ArrayList<>();
+
+	public void updateName(String name) {
+		this.name = name;
+	}
+	public void updateProfileImageUrl(String profileImageUrl) {
+		this.profileImageUrl = profileImageUrl;
+	}
+	public void updateBackgroundImageUrl(String backgroundImageUrl) {
+		this.backgroundImageUrl = backgroundImageUrl;
+	}
 }
