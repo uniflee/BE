@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Schema(description = "상품 수정 요청 데이터 객체")
 public class ItemUpdateRequest {
-	@Schema(description = "상품 대표 이미지 URL", example = "https://example.com/featured.jpg")
+	@Schema(description = "상품 대표 이미지 URL", example = "productImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png")
 	private String featuredImageUrl;
 	@Schema(description = "상품 이름", example = "상품1")
 	private String name;

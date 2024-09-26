@@ -62,7 +62,8 @@ public class ItemController {
 			summary = "상품을 삭제합니다.",
 			description = "상품을 삭제합니다."
 	)
-	public ResponseEntity<?> deleteItem(@RequestBody @Schema(example = "[1,2,3]") List<Long> productIds){
+	public ResponseEntity<?> deleteItem(@RequestBody
+	@Schema(name = "name", type = "array", example = "[1, 2, 3]") List<Long> productIds){
 		itemService.deleteItem(productIds);
 		return ResponseEntity.ok().build();
 	}

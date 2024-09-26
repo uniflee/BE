@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class DesignerInfoResponse {
 	@Schema(description = "디자이너의 이름", example = "홍길동")
 	private String name;
-	@Schema(description = "디자이너의 프로필 이미지 URL", example = "https://example.com/profile.jpg")
+	@Schema(description = "디자이너의 프로필 이미지 URL", example = "profileImage/1234-abcd-5678-efgh.jpg")
 	private String profileImageUrl;
-	@Schema(description = "디자이너의 배경 이미지 URL", example = "https://example.com/background.jpg")
+	@Schema(description = "디자이너의 배경 이미지 URL", example = "backgroundImage/1234-abcd-5678-efgh.jpg")
 	private String backgroundImageUrl;
 }
