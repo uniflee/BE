@@ -26,3 +26,6 @@ Authorization:
 
 secret: ${SECRET}
 
+google:
+  spreadsheet:
+    id: ${GOOGLE_SPREADSHEET_ID}
