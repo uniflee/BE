@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import uniflee.backend.item.dto.ItemRequestDto;
@@ -30,8 +33,35 @@ public class ItemController {
 
 	@GetMapping
 	@Operation(
-			summary = "상품 목록을 조회합니다.",
-			description = "상품 목록을 조회합니다."
+		summary = "상품 목록을 조회합니다.",
+		description = "상품 목록을 조회합니다.",
+		responses = {
+			@ApiResponse(
+				responseCode = "200",
+				description = "성공적으로 조회되었습니다.",
+				content = @Content(
+					mediaType = "application/json",
+					examples = @ExampleObject(
+						value = "["
+							+ "{"
+							+ "\"id\": 1, "
+							+ "\"featuredImageUrl\": \"productImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png\", "
+							+ "\"designerName\": \"홍길동\", "
+							+ "\"name\": \"상품1\", "
+							+ "\"price\": 10000"
+							+ "},"
+							+ "{"
+							+ "\"id\": 2, "
+							+ "\"featuredImageUrl\": \"productImage/b7423289-09af-4b1a-b123-3c5bf9872347.png\", "
+							+ "\"designerName\": \"김영희\", "
+							+ "\"name\": \"상품2\", "
+							+ "\"price\": 15000"
+							+ "}"
+							+ "]"
+					)
+				)
+			)
+		}
 	)
 	public ResponseEntity<List<OwnItemResponse>> getOwnItems(){
 		return ResponseEntity.ok(itemService.getOwnItems());
