@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.google.auth.http.HttpCredentialsAdapter;
@@ -17,6 +18,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import uniflee.backend.gcp.dto.OrderInfo;
 
 @Slf4j
 @Service
@@ -36,15 +38,19 @@ public class GoogleService {
 		return sheetsService;
 	}
 
-	public void writeToSheet(String spreadsheetId, String range, List<List<Object>> values) {
+	public void writeToSheet(String spreadsheetId, String range, OrderInfo request) {
 		try {
+			List<List<Object>> values = List.of(
+				List.of(request.getId().toString(), "미수령", request.getOrderDate().toString(), request.getItemId().toString())
+			);
 			Sheets service = getSheetsService();
 			ValueRange body = new ValueRange().setValues(values);
-			UpdateValuesResponse result = service.spreadsheets().values()
-				.update(spreadsheetId, range, body)
+			AppendValuesResponse result = service.spreadsheets()
+				.values()
+				.append(spreadsheetId, range, body)
 				.setValueInputOption("USER_ENTERED")
+				.setIncludeValuesInResponse(true)
 				.execute();
-			log.info("Updated rows: {}", result.getUpdatedRows());
 		} catch (Exception e) {
 			log.error("Failed to write data to the spreadsheet", e);
 			throw new RuntimeException("Failed to write data to the spreadsheet: " + e.getMessage(), e);
