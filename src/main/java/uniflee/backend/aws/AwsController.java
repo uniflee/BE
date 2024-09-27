@@ -45,10 +45,10 @@ public class AwsController {
 		return ResponseEntity.ok().body(s3ImageService.saveImage(image, type));
 	}
 
-	@DeleteMapping("/{name}")
-	@Operation(summary = "S3 이미지 삭제", description = "해당 api 요청시 s3에 저장된 이미지를 삭제합니다.")
-	public void deleteImageInS3(
-		@PathVariable("name") @Schema(description = "s3 이미지 위치", example = "profileImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png") String name) {
-		s3ImageService.deleteImage(name);
-	}
+	// @DeleteMapping("/{name}")
+	// @Operation(summary = "S3 이미지 삭제", description = "해당 api 요청시 s3에 저장된 이미지를 삭제합니다.")
+	// public void deleteImageInS3(
+	// 	@PathVariable("name") @Schema(description = "s3 이미지 위치", example = "profileImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png") String name) {
+	// 	s3ImageService.deleteImage(name);
+	// }
 }
