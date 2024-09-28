@@ -25,7 +25,8 @@ public class User extends BaseEntity {
 	@Id @GeneratedValue(strategy = IDENTITY)
 	private Long id;
 	private String name;
-	private Long point;
+	private Long totalPoints; // 누적 포인트
+	private Long currentPoints; // 현재 가지고 있는 포인트
 	private Grade grade;
 	private String username;
 	private String password;
@@ -44,5 +45,17 @@ public class User extends BaseEntity {
 		PLATINUM(0.09),
 		DIAMOND(0.15);
 		private final double discountRate;
+	}
+
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
+
+	public void setCurrentPoints(Long currentPoints) {
+		this.currentPoints = currentPoints;
+	}
+
+	public void setTotalPoints(Long totalPoints) {
+		this.totalPoints = totalPoints;
 	}
 }
