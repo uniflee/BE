@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                .requestMatchers(HttpMethod.POST, "api/user").permitAll()
                 .anyRequest().permitAll()
 
                 .and()
