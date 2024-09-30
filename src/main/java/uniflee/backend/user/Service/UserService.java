@@ -61,4 +61,30 @@ public class UserService implements UserDetailsService {
                 .gradeImpact(GradeImpact.valueOf(user.getGrade().name()))
                 .build();
     }
+
+    private User.Grade determineGrade(Long totalPoints) {
+        if (totalPoints >= 20000) {
+            return User.Grade.DIAMOND;
+        } else if (totalPoints >= 10000) {
+            return User.Grade.PLATINUM;
+        } else if (totalPoints >= 5000) {
+            return User.Grade.GOLD;
+        } else if (totalPoints >= 1000) {
+            return User.Grade.SILVER;
+        } else {
+            return User.Grade.BRONZE;
+        }
+    }
+
+    @Transactional
+    public void updatePoints(User user, Long pointsToEarn, Long pointsToSpend) {
+        Long totalPoints = user.getTotalPoints() + pointsToEarn;
+        user.setTotalPoints(totalPoints);
+        user.setGrade(determineGrade(totalPoints));
+
+        Long currentPoint = user.getCurrentPoints() - pointsToSpend;
+        if (currentPoint <= 0)
+            throw new CustomException(ErrorCode.INSUFFICIENT_USER_POINTS);
+        user.setCurrentPoints(currentPoint);
+    }
 }
