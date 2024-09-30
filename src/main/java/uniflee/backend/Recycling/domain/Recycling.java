@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import uniflee.backend.global.domain.BaseEntity;
 import uniflee.backend.user.domain.User;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -16,7 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class Recycling {
+public class Recycling extends BaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
