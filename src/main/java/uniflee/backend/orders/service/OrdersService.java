@@ -14,8 +14,6 @@ import uniflee.backend.user.Repository.UserRepository;
 import uniflee.backend.user.Service.UserService;
 import uniflee.backend.user.domain.User;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class OrdersService {
