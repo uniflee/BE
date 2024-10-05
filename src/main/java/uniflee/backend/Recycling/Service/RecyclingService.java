@@ -1,5 +1,6 @@
 package uniflee.backend.Recycling.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uniflee.backend.Recycling.Dto.RecyclingResponseDto;
@@ -22,6 +23,7 @@ public class RecyclingService {
     private final UserService userService;
     private final UserRepository userRepository;
 
+    @Transactional
     public void addRecycling(String username, ItemType itemType, Long count) {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_USER_ERROR));
@@ -39,8 +41,8 @@ public class RecyclingService {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND_USER_ERROR));
 
-        return recyclingRepository.findAllByUser(user).stream().map(
-                recycling -> RecyclingResponseDto.builder()
+        return user.getRecycling().stream().map(recycling ->
+                RecyclingResponseDto.builder()
                         .itemType(recycling.getItemType())
                         .count(recycling.getCount())
                         .point(recycling.getItemType().getPoints() * recycling.getCount())
