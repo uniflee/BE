@@ -23,6 +23,7 @@ public enum ErrorCode {
 	// STREAM_ROOM_NOT_FOUND_ERROR(404,"STREAMROOM-002", "방을 찾을 수 없습니다"),
 	//order
 	INSUFFICIENT_USER_POINTS(400, "ORDERS-001", "유저 포인트가 부족합니다."),
+	NOT_FOUND_ORDER_ERROR(404, "ORDERS-002", "주문이 존재하지 않습니다."),
 
 	//jwt
 	INVALID_TOKEN_ERROR(401, "AUTH-001", "jwt 토큰이 유효하지 않습니다."),
