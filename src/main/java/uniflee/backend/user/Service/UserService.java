@@ -79,12 +79,11 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void updatePoints(User user, Long pointsToEarn, Long pointsToSpend) {
         Long totalPoints = user.getTotalPoints() + pointsToEarn;
-        user.setTotalPoints(totalPoints);
-        user.setGrade(determineGrade(totalPoints));
 
         Long currentPoint = user.getCurrentPoints() - pointsToSpend;
         if (currentPoint <= 0)
             throw new CustomException(ErrorCode.INSUFFICIENT_USER_POINTS);
-        user.setCurrentPoints(currentPoint);
+
+        user.updateMembership(determineGrade(totalPoints), currentPoint, totalPoints);
     }
 }

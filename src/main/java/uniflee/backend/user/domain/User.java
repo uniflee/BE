@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import uniflee.backend.Recycling.domain.Recycling;
 import uniflee.backend.global.domain.Address;
 import uniflee.backend.global.domain.BaseEntity;
 import uniflee.backend.orders.domain.Orders;
@@ -36,6 +37,9 @@ public class User extends BaseEntity {
 	@OneToMany(mappedBy = "user")
 	private List<Orders> orders = new ArrayList<>();
 
+	@OneToMany(mappedBy = "user")
+	private List<Recycling> recycling = new ArrayList<>();
+
 	@Getter
 	@AllArgsConstructor
 	public enum Grade{
@@ -47,15 +51,9 @@ public class User extends BaseEntity {
 		private final double discountRate;
 	}
 
-	public void setGrade(Grade grade) {
+	public void updateMembership(Grade grade, Long currentPoints, Long totalPoints) {
 		this.grade = grade;
-	}
-
-	public void setCurrentPoints(Long currentPoints) {
 		this.currentPoints = currentPoints;
-	}
-
-	public void setTotalPoints(Long totalPoints) {
 		this.totalPoints = totalPoints;
 	}
 }
