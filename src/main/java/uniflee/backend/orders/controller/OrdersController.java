@@ -31,8 +31,8 @@ public class OrdersController {
 	}
 
 	@GetMapping("/order")
-	public ResponseEntity<OrdersResponseDto> getOrder(@RequestParam Long id) {
-		OrdersResponseDto ordersResponseDto = ordersService.getOrder(id);
+	public ResponseEntity<OrdersResponseDto> getOrder(Authentication authentication, @RequestParam Long id) {
+		OrdersResponseDto ordersResponseDto = ordersService.getOrder(id, authentication.getName());
 		return ResponseEntity.ok(ordersResponseDto);
 	}
 }

@@ -47,7 +47,7 @@ public class OrdersService {
 		User user = userRepository.findByUsername(username).orElseThrow(
 				() -> new CustomException(ErrorCode.NOT_FOUND_USER_ERROR));
 
-		List<OrdersResponseDto> ordersResponseDtoList = ordersRepository.findByUser(user).stream().map(orders ->
+		List<OrdersResponseDto> ordersResponseDtoList = user.getOrders().stream().map(orders ->
 				OrdersResponseDto.builder()
 						.id(orders.getId())
 						.point(orders.getItem().getPrice())
@@ -64,8 +64,10 @@ public class OrdersService {
 				.build();
 	}
 
-	public OrdersResponseDto getOrder(Long id) {
-		Orders orders = ordersRepository.findById(id).orElseThrow(
+	public OrdersResponseDto getOrder(Long id, String username) {
+		User user = userRepository.findByUsername(username).orElseThrow(
+				() -> new CustomException(ErrorCode.NOT_FOUND_USER_ERROR));
+		Orders orders = ordersRepository.findByUserAndId(user, id).orElseThrow(
 				() -> new CustomException(ErrorCode.NOT_FOUND_ORDER_ERROR));
 
 		return OrdersResponseDto.builder()

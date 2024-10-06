@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import uniflee.backend.orders.domain.Orders;
 import uniflee.backend.user.domain.User;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
-    List<Orders> findByUser(User user);
+    Optional<Orders> findByUserAndId(User user, Long Id);
 }
