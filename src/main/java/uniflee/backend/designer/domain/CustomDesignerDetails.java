@@ -1,5 +1,6 @@
-package uniflee.backend.user.domain;
+package uniflee.backend.designer.domain;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,26 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class CustomUserDetails implements UserDetails {
-    private final User user;
+@AllArgsConstructor
+public class CustomDesignerDetails implements UserDetails {
 
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
+    private Designer designer;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority(User.class.getSimpleName().toUpperCase() + "_ROLE"));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + Designer.class.getSimpleName().toUpperCase()));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return designer.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return designer.getUsername();
     }
 
     @Override

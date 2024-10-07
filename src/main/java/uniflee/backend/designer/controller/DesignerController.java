@@ -1,19 +1,12 @@
 package uniflee.backend.designer.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import uniflee.backend.designer.dto.BackgroundImageUpdateRequest;
-import uniflee.backend.designer.dto.DesignerInfoResponse;
-import uniflee.backend.designer.dto.DesignerNameUpdateRequest;
-import uniflee.backend.designer.dto.ProfileImageUpdateRequest;
+import uniflee.backend.designer.dto.*;
 import uniflee.backend.designer.service.DesignerService;
 
 @RestController
@@ -61,4 +54,12 @@ public class DesignerController {
 		designerService.updateBackgroundImage(request.getBackgroundImage());
 		return ResponseEntity.ok().build();
 	}
+
+	// 디자이너 회원가입은 관리자 페이지에서 사용
+	@PostMapping
+	public ResponseEntity<String> addDesigner(@RequestBody SignRequest signRequest) {
+		designerService.addDesigner(signRequest);
+		return ResponseEntity.ok("register");
+	}
+
 }
