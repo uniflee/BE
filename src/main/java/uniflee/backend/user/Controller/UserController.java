@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import uniflee.backend.user.Dto.MembershipDto;
-import uniflee.backend.user.Dto.SignDto;
 import uniflee.backend.user.Service.UserService;
 import uniflee.backend.user.domain.User;
 
@@ -17,12 +16,6 @@ import uniflee.backend.user.domain.User;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @PostMapping
-    public ResponseEntity<User> userSave(@RequestBody SignDto signDto) {
-        User user = userService.addUser(signDto);
-        return ResponseEntity.ok().body(user);
-    }
 
     @GetMapping("/membership")
     public ResponseEntity<MembershipDto> userMembership(Authentication authentication) {
