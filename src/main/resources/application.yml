@@ -8,6 +8,28 @@ spring:
     hibernate:
       ddl-auto: update
 
+  security:
+    oauth2:
+      client:
+        registration:
+          kookmin:
+            client-name: kookmin
+            client-id: ${OAUTH2_CLIENT_ID}
+            client-secret: ${OAUTH2_CLIENT_SECRET}
+            redirect-uri: http://localhost:8080/login/oauth2/code/{registrationId}
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            scope:
+              - profile
+              - email
+        provider:
+          kookmin:
+            authorization-uri: https://kconnect.cs.kookmin.ac.kr/oauth/authorize/
+            token-uri: https://kconnect.cs.kookmin.ac.kr/oauth/token/
+            user-info-uri: https://kconnect.cs.kookmin.ac.kr/api/v1/account/profile/me/
+            user-name-attribute: uid
+
+
 cloud:
   aws:
     s3:
