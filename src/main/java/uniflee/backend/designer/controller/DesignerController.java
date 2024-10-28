@@ -54,8 +54,7 @@ public class DesignerController {
 		designerService.updateBackgroundImage(request.getBackgroundImage());
 		return ResponseEntity.ok().build();
 	}
-
-	// 디자이너 회원가입은 관리자 페이지에서 사용
+	@Operation(hidden = true)
 	@PostMapping
 	public ResponseEntity<String> addDesigner(@RequestBody SignRequest signRequest) {
 		designerService.addDesigner(signRequest);
