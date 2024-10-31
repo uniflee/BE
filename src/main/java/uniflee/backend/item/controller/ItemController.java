@@ -41,6 +41,7 @@ public class ItemController {
 				description = "성공적으로 조회되었습니다.",
 				content = @Content(
 					mediaType = "application/json",
+						schema = @Schema(implementation = OwnItemResponse.class),
 					examples = @ExampleObject(
 						value = "["
 							+ "{"

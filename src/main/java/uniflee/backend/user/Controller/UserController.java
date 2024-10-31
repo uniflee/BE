@@ -3,6 +3,7 @@ package uniflee.backend.user.Controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import uniflee.backend.user.Dto.MembershipDto;
 import uniflee.backend.user.Service.UserService;
-import uniflee.backend.user.domain.User;
 
 @Slf4j
 @RestController
@@ -31,6 +31,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공적으로 조회되었습니다.",
                     content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MembershipDto.class),
                             examples = @ExampleObject(value = "{\n" +
                                     "  \"totalPoints\": 10,\n" +
                                     "  \"grade\": \"BRONZE\",\n" +
