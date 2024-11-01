@@ -1,6 +1,5 @@
 package uniflee.backend.user.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import uniflee.backend.Security.JwtProvider;
-import uniflee.backend.user.Dto.UserInfoResponseDto;
 import uniflee.backend.user.Dto.PrincipalUserDetails;
 import uniflee.backend.user.domain.User;
 
@@ -20,27 +18,31 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
-    private final ObjectMapper objectMapper;
+
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+
         PrincipalUserDetails userDetails = (PrincipalUserDetails) authentication.getPrincipal();
         User user = userDetails.getUser();
 
-        UserInfoResponseDto userInfoResponseDto = UserInfoResponseDto.builder()
-                .id(user.getId())
-                .grade(user.getGrade())
-                .name(user.getName())
-                .username(user.getUsername())
-                .build();
+        String redirectUrl = "http://localhost:8080/login/success/token=";
+        String accessToken = jwtProvider.createAccessToken(user.getUsername());
+        String refreshToken;
 
-        response.addHeader("accessToken", jwtProvider.createAccessToken(user.getUsername()));
-        response.setContentType("application/json");
+        // 내부 sendRedirect가 동작하지 않아 자바스크립트 작성
+        String htmlResponse = "<html>" +
+                "<head><title>Redirecting...</title></head>" +
+                "<body>" +
+                "<script type='text/javascript'>" +
+                "window.location.href = '" + redirectUrl + accessToken + "';" +
+                "</script>" +
+                "</body>" +
+                "</html>";
+
+        response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
-
-        String userJsonResponse = objectMapper.writeValueAsString(userInfoResponseDto);
-        response.getWriter().write(userJsonResponse);
-        response.getWriter().flush();
+        response.getWriter().write(htmlResponse);
     }
 }
