@@ -1,9 +1,13 @@
 package uniflee.backend.orders.service;
 
+import static java.time.LocalDateTime.*;
+
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import uniflee.backend.gcp.dto.OrderInfo;
+import uniflee.backend.gcp.service.GoogleService;
 import uniflee.backend.global.exception.CustomException;
 import uniflee.backend.global.exception.ErrorCode;
 import uniflee.backend.item.domain.Item;
@@ -26,6 +30,7 @@ public class OrdersService {
 	private final UserRepository userRepository;
 	private final ItemRepository itemRepository;
 	private final UserService userService;
+	private final GoogleService googleService;
 
 	@Transactional
 	public void addOrders(String username, Long itemId, Long count) {
@@ -34,8 +39,17 @@ public class OrdersService {
 		Item item = itemRepository.findById(itemId).orElseThrow(
 				() -> new CustomException(ErrorCode.ITEM_NOT_FOUND_ERROR));
 
+		OrderInfo orderInfo = OrderInfo.builder()
+				.id(user.getUsername())
+				.ItemId(itemId)
+				.orderDate(now())
+				.count(count)
+				.build();
+
+		googleService.writeToSheet(orderInfo);
+
 		userService.updatePoints(user, 0L,
-				(long) (count * item.getPrice() * user.getGrade().getDiscountRate()));
+			(long)(count * item.getPrice() * (1 - user.getGrade().getDiscountRate())));
 		ordersRepository.save(Orders.builder()
 				.count(count)
 				.item(item)

@@ -8,7 +8,8 @@ import lombok.Getter;
 @Getter
 @Builder
 public class OrderInfo {
-	private Long id;
+	private String id;
 	private Long ItemId;
 	private LocalDateTime orderDate;
+	private Long count;
 }
