@@ -75,13 +75,12 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String token) {
-        if (!token.substring(0, "BEARER ".length()).equalsIgnoreCase("BEARER ")) {
-            return false;
-        } else {
-            token = disassembleToken(token);
-        }
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         return !claims.getBody().getExpiration().before(new Date());
+    }
+
+    public boolean checkBearerToken(String token) {
+        return token.substring(0, "BEARER ".length()).equalsIgnoreCase("BEARER ");
     }
 
     public String disassembleToken(String token) {

@@ -24,18 +24,20 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = jwtProvider.resolveToken(request);
         try {
-            if (jwtProvider.validateToken(token)) {
+            if (jwtProvider.checkBearerToken(token)) {
                 token = jwtProvider.disassembleToken(token);
-                if (!jwtProvider.isAccessToken(token)) {
+
+                if (jwtProvider.validateToken(token) && jwtProvider.isAccessToken(token)) {
+                    String username = jwtProvider.getUser(token);
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, null);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
                     throw new CustomException(ErrorCode.TOKEN_CATEGORY_NOT_MATCHED_ERROR);
                 }
-                String username = jwtProvider.getUser(token);
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, null);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }
-            filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }
