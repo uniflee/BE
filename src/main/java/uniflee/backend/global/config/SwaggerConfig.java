@@ -44,6 +44,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         OpenAPI openAPI = new OpenAPI();
 
+
+
         // username 파라미터 설정
         Parameter usernameParam = new Parameter()
                 .in("query")
@@ -65,6 +67,7 @@ public class SwaggerConfig {
                 .post(new Operation()
                         .summary("User Login")
                         .description("Authenticates a designer with username and password and returns designer info.")
+                        .addTagsItem("디자이너 로그인")
                         .parameters(Arrays.asList(usernameParam, passwordParam))
                         .responses(new ApiResponses()
                                 .addApiResponse("200", new ApiResponse()
@@ -90,6 +93,7 @@ public class SwaggerConfig {
                 .get(new Operation()
                         .summary("OAuth2 Login")
                         .description("Redirects to the OAuth2 login page for Kookmin authorization.")
+                        .addTagsItem("국민대 로그") // Tag 추가
                         .responses(new ApiResponses()
                                 .addApiResponse("200", new ApiResponse()
                                         .description("OAuth2 Login successful")
