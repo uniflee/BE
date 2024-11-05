@@ -10,8 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import uniflee.backend.Refresh.Service.RefreshService;
 import uniflee.backend.designer.domain.CustomDesignerDetails;
 import uniflee.backend.designer.domain.Designer;
 import uniflee.backend.designer.dto.DesignerInfoResponse;
@@ -23,11 +23,13 @@ import java.io.IOException;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final RefreshService refreshService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public LoginFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
+    public LoginFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider, RefreshService refreshService) {
         this.jwtProvider = jwtProvider;
         this.authenticationManager = authenticationManager;
+        this.refreshService = refreshService;
         setFilterProcessesUrl("/login");
     }
 
@@ -46,7 +48,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         CustomDesignerDetails designerDetails = (CustomDesignerDetails) authResult.getPrincipal();
         Designer designer = designerDetails.getDesigner();
-        String accessToken = jwtProvider.createAccessToken(designerDetails.getUsername());
+        String accessToken = jwtProvider.createAccessToken(designer.getUsername());
+        String refreshToken = jwtProvider.createRefreshToken(designer.getUsername());
+        refreshService.addRefreshToken(designer.getUsername(), refreshToken);
 
         DesignerInfoResponse designerInfoResponse = DesignerInfoResponse.builder()
                 .name(designer.getName())
@@ -55,6 +59,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 .build();
 
         response.addHeader("Authorization", accessToken);
+        response.addHeader("Refresh-token", refreshToken);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
