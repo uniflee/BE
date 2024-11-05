@@ -1,6 +1,8 @@
 package uniflee.backend.global.config;
 
+import com.sun.net.httpserver.Headers;
 import io.swagger.v3.oas.models.*;
+import io.swagger.v3.oas.models.headers.Header;
 import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
@@ -44,8 +46,6 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         OpenAPI openAPI = new OpenAPI();
 
-
-
         // username 파라미터 설정
         Parameter usernameParam = new Parameter()
                 .in("query")
@@ -72,6 +72,12 @@ public class SwaggerConfig {
                         .responses(new ApiResponses()
                                 .addApiResponse("200", new ApiResponse()
                                         .description("Login successful")
+                                        .addHeaderObject("Authorization", new Header()
+                                                .description("Access Token for authentication")
+                                                .schema(new Schema<String>().type("string").example("<access_token>")))
+                                        .addHeaderObject("Refresh-Token", new Header()
+                                                .description("Refresh Token for re-authentication")
+                                                .schema(new Schema<String>().type("string").example("<refresh_token>")))
                                         .content(new Content()
                                                 .addMediaType("application/json", new MediaType()
                                                         .schema(new Schema<>()
@@ -88,22 +94,20 @@ public class SwaggerConfig {
                                                                 .addProperty("error", new Schema<String>().type("string").example("AUTH-001"))
                                                                 .addProperty("message", new Schema<String>().type("string").example("userName 또는 password가 일치하지 않습니다."))
                                                                 .addProperty("path", new Schema<String>().type("string").example("/login"))))))));
+
         // /oauth2/authorization/kookmin 경로 추가
         PathItem oauthLoginPath = new PathItem()
                 .get(new Operation()
                         .summary("OAuth2 Login")
                         .description("Redirects to the OAuth2 login page for Kookmin authorization.")
-                        .addTagsItem("국민대 로그") // Tag 추가
+                        .addTagsItem("국민대 로그인")
                         .responses(new ApiResponses()
-                                .addApiResponse("200", new ApiResponse()
-                                        .description("OAuth2 Login successful")
-                                        .content(new Content()
-                                                .addMediaType("application/json", new MediaType()
-                                                        .schema(new Schema<>()
-                                                                .addProperty("id", new Schema<Long>().type("integer").format("int64").example(1))
-                                                                .addProperty("name", new Schema<String>().type("string").example("김선미"))
-                                                                .addProperty("grade", new Schema<String>().type("string").example("BRONZE"))
-                                                                .addProperty("username", new Schema<String>().type("string").example("hariaus"))))))
+                                .addApiResponse("301", new ApiResponse()
+                                        .description("OAuth2 로그인 성공시 redirect 통해 token URL 접근")
+                                        .addHeaderObject("Location", new Header()
+                                                .description("Redirect URL with Access and Refresh Tokens")
+                                                .schema(new Schema<String>().type("string")
+                                                        .example("http://localhost:8080/login/success/?accesstoken=<access_token>&refreshtoken=<refresh_token>"))))
                                 .addApiResponse("403", new ApiResponse()
                                         .description("Forbidden"))));
 
