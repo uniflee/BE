@@ -21,7 +21,7 @@ public class JwtProvider {
     @Value("${secret}")
     private String secretKey;
 
-    private Long accessTokenExp = 86400L * 10000000;
+    private Long accessTokenExp = 86400L;
 
     private Long refreshTokenExp = 86400L;
 
