@@ -2,6 +2,7 @@ package uniflee.backend.aws;
 
 import static uniflee.backend.global.exception.ErrorCode.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -61,8 +62,10 @@ public class AwsService {
 		metadata.setContentLength(multipartFile.getSize());
 		metadata.setContentType(multipartFile.getContentType());
 
-		amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), metadata);
-
+		byte[] bytes = multipartFile.getBytes();
+		try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes)) {
+			amazonS3.putObject(bucket, fileName, byteArrayInputStream, metadata);
+		}
 		String resourceURL = amazonS3.getUrl(bucket, fileName).toString();
 		return resourceURL.substring(resourceURL.lastIndexOf("/"));
 	}
