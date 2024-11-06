@@ -1,6 +1,5 @@
 package uniflee.backend.Security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import uniflee.backend.Refresh.Service.RefreshService;
 import uniflee.backend.user.Service.OAuth2SuccessHandler;
 import uniflee.backend.user.Service.UserService;
 
@@ -24,6 +24,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final UserService userService;
+    private final RefreshService refreshService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
@@ -70,7 +71,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(
                         new LoginFilter(
-                                authenticationManager(authenticationConfiguration), jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                                authenticationManager(authenticationConfiguration), jwtProvider, refreshService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
