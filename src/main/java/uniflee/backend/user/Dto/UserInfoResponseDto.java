@@ -23,4 +23,8 @@ public class UserInfoResponseDto {
     private User.Grade grade;
     @Schema(description = "유저 로그인 ID", example = "hariaus")
     private String username;
+    @Schema(description = "누적 포인트", example = "10000")
+    private Long totalPoints;
+    @Schema(description = "보유 포인트", example = "10000")
+    private Long currentPoints;
 }

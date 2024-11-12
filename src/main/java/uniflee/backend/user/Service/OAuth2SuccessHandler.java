@@ -28,19 +28,19 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         PrincipalUserDetails userDetails = (PrincipalUserDetails) authentication.getPrincipal();
         User user = userDetails.getUser();
 
-        String redirectUrl = "http://localhost:8080/login/success/";
+        String redirectUrl = "uniflee:///token";
         String accessToken = jwtProvider.createAccessToken(user.getUsername());
         String refreshToken = jwtProvider.createRefreshToken(user.getUsername());
         refreshService.addRefreshToken(user.getUsername(), refreshToken);
 
-        // 내부 sendRedirect가 동작하지 않아 자바스크립트 작성
+        // 완료 보여주고 싶으면 이거 살리기
         String htmlResponse = "<html>" +
                 "<head><title>Redirecting...</title></head>" +
-                "<body>" +
+                "<body>" + "완료" +
                 "<script type='text/javascript'>" +
                 "window.location.href = '" + redirectUrl +
-                "accesstoken=" + accessToken +
-                "refreshtoken=" + refreshToken + "';" +
+                "?t=" + accessToken +
+                "&r=" + refreshToken + "';" + "window.close();" +
                 "</script>" +
                 "</body>" +
                 "</html>";
