@@ -12,6 +12,7 @@ import uniflee.backend.global.exception.CustomException;
 import uniflee.backend.global.exception.ErrorCode;
 import uniflee.backend.user.Dto.OAuth2UserInfo;
 import uniflee.backend.user.Dto.PrincipalUserDetails;
+import uniflee.backend.user.Dto.UserInfoResponseDto;
 import uniflee.backend.user.Repository.UserRepository;
 import uniflee.backend.user.domain.GradeImpact;
 import uniflee.backend.user.domain.User;
@@ -33,6 +34,20 @@ public class UserService extends DefaultOAuth2UserService {
                 .grade(user.getGrade())
                 .gradeImpact(GradeImpact.valueOf(user.getGrade().name()))
                 .name(user.getName())
+                .build();
+    }
+
+    public UserInfoResponseDto getUserInfo(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND_USER_ERROR));
+
+        return UserInfoResponseDto.builder()
+                .id(user.getId())
+                .currentPoints(user.getCurrentPoints())
+                .totalPoints(user.getTotalPoints())
+                .grade(user.getGrade())
+                .name(username)
+                .grade(user.getGrade())
                 .build();
     }
 
