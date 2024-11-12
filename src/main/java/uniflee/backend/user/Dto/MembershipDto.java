@@ -1,6 +1,5 @@
 package uniflee.backend.user.Dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +24,6 @@ public class MembershipDto {
             "    \"co2Reduced\": \"100 kg\"\n" +
             "  }")
     GradeImpact gradeImpact;
-
+    @Schema(description = "유저 이름", example = "김선미")
+    String name;
 }

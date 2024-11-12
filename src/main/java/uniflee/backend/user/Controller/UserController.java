@@ -35,14 +35,16 @@ public class UserController {
                             examples = @ExampleObject(value = "{\n" +
                                     "  \"totalPoints\": 10,\n" +
                                     "  \"grade\": \"BRONZE\",\n" +
+                                    "  \"name\": \"김선미\",\n" +
                                     "  \"gradeImpact\": {\n" +
                                     "    \"treesProtected\": \"5-10 그루\",\n" +
                                     "    \"energySaved\": \"100 kWh\",\n" +
                                     "    \"plasticPrevented\": \"10 kg\",\n" +
                                     "    \"co2Reduced\": \"100 kg\"\n" +
                                     "  }\n" +
-                                    "}")))
-    })
+                                    "}"))
+
+                    )})
     @GetMapping("/membership")
     public ResponseEntity<MembershipDto> userMembership(Authentication authentication) {
         MembershipDto membershipDto = userService.getMembership(authentication.getName());
