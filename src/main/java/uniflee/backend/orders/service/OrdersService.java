@@ -74,6 +74,7 @@ public class OrdersService {
 
 		return OrdersListResponseDto.builder()
 				.currentPoint(user.getCurrentPoints())
+				.name(user.getName())
 				.ordersResponseDtoList(ordersResponseDtoList)
 				.build();
 	}
