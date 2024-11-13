@@ -14,6 +14,7 @@ import uniflee.backend.global.exception.CustomException;
 import uniflee.backend.item.domain.Item;
 import uniflee.backend.item.dto.ItemRequestDto;
 import uniflee.backend.item.dto.ItemUpdateRequest;
+import uniflee.backend.item.dto.OwnItemDetailResponse;
 import uniflee.backend.item.dto.OwnItemResponse;
 import uniflee.backend.item.repository.ItemRepository;
 import uniflee.backend.itemDescription.domain.ItemDescription;
@@ -98,5 +99,25 @@ public class ItemService {
 				item.getItemDetails().add(description);
 			}
 		);
+	}
+
+	public OwnItemDetailResponse getOwnItem(Long itemId) {
+		Item item = itemRepository.findById(itemId).orElseThrow(
+			() -> new CustomException(ITEM_NOT_FOUND_ERROR)
+		);
+		return OwnItemDetailResponse.builder()
+			.id(item.getId())
+			.featuredImageUrl(item.getFeaturedImageUrl())
+			.designerName(item.getDesigner().getName())
+			.name(item.getName())
+			.price(item.getPrice())
+			.descriptions(item.getItemDetails().stream().map(
+				description ->
+					OwnItemDetailResponse.ItemDescriptionDto.builder()
+						.description(description.getDescription())
+						.imageUrl(description.getImageUrl())
+						.build()
+			).toList())
+			.build();
 	}
 }

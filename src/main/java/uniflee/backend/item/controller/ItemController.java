@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import uniflee.backend.item.dto.ItemRequestDto;
 import uniflee.backend.item.dto.ItemUpdateRequest;
+import uniflee.backend.item.dto.OwnItemDetailResponse;
 import uniflee.backend.item.dto.OwnItemResponse;
 import uniflee.backend.item.service.ItemService;
 
@@ -66,6 +67,44 @@ public class ItemController {
 	)
 	public ResponseEntity<List<OwnItemResponse>> getOwnItems(){
 		return ResponseEntity.ok(itemService.getOwnItems());
+	}
+
+	@GetMapping("/{itemId}")
+	@Operation(
+		summary = "상품을 조회합니다.",
+		description = "상품을 조회합니다.",
+		responses = {
+			@ApiResponse(
+				responseCode = "200",
+				description = "성공적으로 조회되었습니다.",
+				content = @Content(
+					mediaType = "application/json",
+					schema = @Schema(implementation = OwnItemDetailResponse.class),
+					examples = @ExampleObject(
+						value = "{"
+							+ "\"id\": 1, "
+							+ "\"featuredImageUrl\": \"productImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png\", "
+							+ "\"designerName\": \"홍길동\", "
+							+ "\"name\": \"상품1\", "
+							+ "\"price\": 10000, "
+							+ "\"descriptions\": ["
+							+ "{"
+							+ "\"description\": \"상품 설명입니다.\", "
+							+ "\"imageUrl\": \"productImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png\""
+							+ "},"
+							+ "{"
+							+ "\"description\": \"상품 설명입니다.\", "
+							+ "\"imageUrl\": \"productImage/a3821089-02ef-4a3c-946d-6e3bf3456658.png\""
+							+ "}"
+							+ "]"
+							+ "}"
+					)
+				)
+			)
+		}
+	)
+	public ResponseEntity<OwnItemDetailResponse> getOwnItem(@PathVariable Long itemId){
+		return ResponseEntity.ok(itemService.getOwnItem(itemId));
 	}
 
 	@PostMapping
