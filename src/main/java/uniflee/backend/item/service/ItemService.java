@@ -64,12 +64,11 @@ public class ItemService {
 	}
 
 	public List<OwnItemResponse> getOwnItems() {
-		Designer designer = designerService.getDesigner();
-		return itemRepository.findByDesigner(designer).stream().map(
+		return itemRepository.findAll().stream().map(
 			item -> OwnItemResponse.builder()
 				.id(item.getId())
 				.featuredImageUrl(item.getFeaturedImageUrl())
-				.designerName(designer.getName())
+				.designerName(item.getDesigner().getName())
 				.name(item.getName())
 				.price(item.getPrice())
 				.build()
@@ -78,13 +77,9 @@ public class ItemService {
 
 	@Transactional
 	public void updateItem(ItemUpdateRequest request, Long itemId) {
-		Designer designer = designerService.getDesigner();
 		Item item = itemRepository.findById(itemId).orElseThrow(
 			() -> new CustomException(ITEM_NOT_FOUND_ERROR)
 		);
-		if(!item.isItemOwner(designer)) {
-			throw new CustomException(PRODUCT_ACCESS_DENIED_ERROR);
-		}
 		item.updateItem(request);
 
 		request.getDescriptions().stream().map(
