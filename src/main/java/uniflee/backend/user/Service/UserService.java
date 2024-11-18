@@ -46,7 +46,8 @@ public class UserService extends DefaultOAuth2UserService {
                 .currentPoints(user.getCurrentPoints())
                 .totalPoints(user.getTotalPoints())
                 .grade(user.getGrade())
-                .name(username)
+                .username(username)
+                .name(user.getName())
                 .grade(user.getGrade())
                 .build();
     }
