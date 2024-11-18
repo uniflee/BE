@@ -10,6 +10,7 @@ public enum ErrorCode {
 	// //global
 	// INTERNAL_SERVER_ERROR(500, "GLOBAL-001", "서버에 오류가 발생하였습니다."),
 	INPUT_INVALID_VALUE_ERROR(400, "GLOBAL-002", "잘못된 입력 값입니다."),
+	EMPTY_INPUT_ERROR(400, "GLOBAL-003", "입력 값이 비어있습니다."),
 	// INPUT_INVALID_TYPE_ERROR(400, "GLOBAL-003", "잘못된 입력 타입입니다."),
 	// REQUEST_PARAMETER_NOT_FOUND_ERROR(400, "GLOBAL-004", "입력 파라미터가 존재하지 않습니다."),
 	// REQUEST_PARAMETER_TYPE_NOT_MATCH_ERROR(400, "GLOBAL-005", "입력 파라미터의 타입이 올바르지 않습니다."),
@@ -40,6 +41,7 @@ public enum ErrorCode {
 	ALREADY_EXIST_USER_ERROR(400, "AUTH-002", "이미 존재하는 사용자입니다."),
 	USERNAME_NOT_FOUND_ERROR(404, "AUTH-003", "사용자 이름을 찾을 수 없습니다."),
 	NOT_FOUND_USER_ERROR(404, "AUTH-004", "사용자를 찾을 수 없습니다."),
+	NOT_FOUND_DESIGNER_ERROR(404, "AUTH-005", "디자이너를 찾을 수 없습니다."),
 	ACCESS_DENIED_ERROR(403, "AUTH-005", "접근 권한이 없습니다."),
 	ALREADY_LOGOUT_ERROR(400, "AUTH-006", "이미 로그아웃 되었습니다."),
 	PRINCIPAL_NOT_FOUND_ERROR(404, "AUTH-007", "principal을 찾을 수 없습니다."),
