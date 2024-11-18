@@ -33,14 +33,32 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String refreshToken = jwtProvider.createRefreshToken(user.getUsername());
         refreshService.addRefreshToken(user.getUsername(), refreshToken);
 
-        // 완료 보여주고 싶으면 이거 살리기
         String htmlResponse = "<html>" +
-                "<head><title>Redirecting...</title></head>" +
-                "<body>" + "완료" +
+                "<head>" +
+                "<title>Redirecting...</title>" +
+                "<style>" +
+                "body {" +
+                "  margin: 0;" +
+                "  display: flex;" +
+                "  align-items: center;" +
+                "  justify-content: center;" +
+                "  height: 100vh;" + // Viewport Height: 화면 높이의 100%
+                "  background-color: #f4f4f4;" + // 배경색은 선택
+                "}" +
+                "img {" +
+                "  max-width: 100%;" + // 이미지를 가로로 꽉 채움
+                "  max-height: 100%;" + // 이미지를 세로로 꽉 채움
+                "  object-fit: contain;" + // 비율을 유지하면서 화면에 맞춤
+                "}" +
+                "</style>" +
+                "</head>" +
+                "<body>" +
+                "<img src='/images/complete.png' alt='완료 이미지'>" +
                 "<script type='text/javascript'>" +
                 "window.location.href = '" + redirectUrl +
                 "?t=" + accessToken +
-                "&r=" + refreshToken + "';" + "window.close();" +
+                "&r=" + refreshToken + "';" +
+                "window.close();" +
                 "</script>" +
                 "</body>" +
                 "</html>";

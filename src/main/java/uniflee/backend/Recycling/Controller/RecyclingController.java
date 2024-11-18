@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import uniflee.backend.Recycling.Dto.RecyclingRequestDto;
 import uniflee.backend.Recycling.Dto.RecyclingResponseDto;
+import uniflee.backend.Recycling.Dto.RecyclingStrategyResponse;
 import uniflee.backend.Recycling.Service.RecyclingService;
 import uniflee.backend.Recycling.domain.ItemType;
 
@@ -47,7 +48,15 @@ public class RecyclingController {
             description = "분리 배출 품목에 따른 배출 가이드를 가져옵니다."
     )
     @GetMapping("/guide")
-    public ResponseEntity<String> getRecyclingGuide(@RequestParam String itemType) {
-        return ResponseEntity.ok(ItemType.valueOf(itemType).getDisposalInstructions());
+    public ResponseEntity<RecyclingStrategyResponse> getRecyclingGuide(@RequestParam String itemType) {
+        ItemType type = ItemType.valueOf(itemType);
+        RecyclingStrategyResponse response = RecyclingStrategyResponse.builder()
+                .point(type.getPoints())
+                .co2(type.getCo2())
+                .disposalInstructions1(type.getDisposalInstructions1())
+                .disposalInstructions2(type.getDisposalInstructions2())
+                .disposalInstructions3(type.getDisposalInstructions3())
+                .build();
+        return ResponseEntity.ok(response);
     }
 }
