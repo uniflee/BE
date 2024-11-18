@@ -51,12 +51,13 @@ public class DesignerService implements UserDetailsService {
 
 	private void checkInput(String input) {
 		if(!StringUtils.hasText(input)){
-			// TODO : merge하고 수정
-			// throw new CustomException(INVALID_INPUT_VALUE_ERROR);
+			throw new CustomException(EMPTY_INPUT_ERROR);
 		}
 	}
 	public DesignerInfoResponse getDesignerInfo() {
-		Designer designer = getDesigner();
+		Designer designer = designerRepository.findById(1L).orElseThrow(
+			() -> new CustomException(NOT_FOUND_DESIGNER_ERROR)
+		);
 		return DesignerInfoResponse.builder()
 			.name(designer.getName())
 			.profileImageUrl(designer.getProfileImageUrl())
