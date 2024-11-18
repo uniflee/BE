@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -24,4 +26,6 @@ public class OrdersResponseDto {
     private Long point;
     @Schema(description = "item 가격 * 개수", example = "20000")
     private Long totalPoint;
+    @Schema(description = "주문 등록 일시")
+    private LocalDateTime createdAt;
 }

@@ -70,6 +70,7 @@ public class OrdersService {
 						.totalPoint(orders.getItem().getPrice() * orders.getCount())
 						.designerName(orders.getItem().getDesigner().getName())
 						.featuredImageUrl(orders.getItem().getFeaturedImageUrl())
+						.createdAt(orders.getCreatedAt())
 						.build()).toList();
 
 		return OrdersListResponseDto.builder()
