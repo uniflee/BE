@@ -53,13 +53,13 @@ public class UserService extends DefaultOAuth2UserService {
     }
 
     private User.Grade determineGrade(Long totalPoints) {
-        if (totalPoints >= 20000) {
+        if (totalPoints >= 5000) {
             return User.Grade.DIAMOND;
-        } else if (totalPoints >= 10000) {
+        } else if (totalPoints >= 2000) {
             return User.Grade.PLATINUM;
-        } else if (totalPoints >= 5000) {
-            return User.Grade.GOLD;
         } else if (totalPoints >= 1000) {
+            return User.Grade.GOLD;
+        } else if (totalPoints >= 500) {
             return User.Grade.SILVER;
         } else {
             return User.Grade.BRONZE;
