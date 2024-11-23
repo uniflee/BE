@@ -13,3 +13,4 @@ public class RecyclingRequestDto {
     @Schema(description = "디자이너의 프로필 이미지 URL", example = "profileImage/1234-abcd-5678-efgh.jpg")
     private Long count;
 }
+

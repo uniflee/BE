@@ -43,11 +43,11 @@ public class User extends BaseEntity {
 	@Getter
 	@AllArgsConstructor
 	public enum Grade{
-		BRONZE(0.01),
-		SILVER(0.03),
-		GOLD(0.06),
-		PLATINUM(0.09),
-		DIAMOND(0.15);
+		BRONZE(0.02),
+		SILVER(0.05),
+		GOLD(0.08),
+		PLATINUM(0.12),
+		DIAMOND(0.2);
 		private final double discountRate;
 	}
 
